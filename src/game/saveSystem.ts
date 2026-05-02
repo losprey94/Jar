@@ -1,16 +1,14 @@
 import type { GameState } from './gameState';
-
-const SAVE_KEY = 'tiny-terra-save-v1';
+const SAVE_KEY = 'tiny-terra-save-v2';
 
 export const saveGame = (state: GameState) => {
   localStorage.setItem(SAVE_KEY, JSON.stringify({ ...state, lastSavedAt: Date.now() }));
 };
 
 export const loadGame = (): GameState | null => {
-  const raw = localStorage.getItem(SAVE_KEY);
-  if (!raw) return null;
   try {
-    return JSON.parse(raw) as GameState;
+    const raw = localStorage.getItem(SAVE_KEY);
+    return raw ? (JSON.parse(raw) as GameState) : null;
   } catch {
     return null;
   }
